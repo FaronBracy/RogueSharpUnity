@@ -28,11 +28,13 @@ namespace Completed
 		//Start overrides the Start function of MovingObject
 		protected override void Start ()
 		{
-			//Get a component reference to the Player's animator component
-			animator = GetComponent<Animator>();
+		   this.transform.position = GameManager.instance.GetComponent<BoardManager>().GetRandomEmptyCell();
+         //Get a component reference to the Player's animator component
+         animator = GetComponent<Animator>();
 			
 			//Get the current food point total stored in GameManager.instance between levels.
 			food = GameManager.instance.playerFoodPoints;
+		   
 			
 			//Set the foodText to reflect the current player food total.
 			foodText.text = "Food: " + food;
