@@ -17,7 +17,7 @@ namespace Assets.Scripts
       public void Update()
       {
          ElapsedTime = Time.time;
-         if ( Time.time - LastKeyPressTime > 0.2f )
+         if ( Input.anyKeyDown || Time.time - LastKeyPressTime > 0.2f )
          {
             LastKeyPressTime = Time.time;
             float vertical = Input.GetAxisRaw( "Vertical" );
