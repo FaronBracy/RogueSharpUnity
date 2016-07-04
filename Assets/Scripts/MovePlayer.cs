@@ -17,7 +17,7 @@ namespace Assets.Scripts
       public void Update()
       {
          ElapsedTime = Time.time;
-         if ( Time.time - LastKeyPressTime > 0.05f )
+         if ( Time.time - LastKeyPressTime > 0.2f )
          {
             LastKeyPressTime = Time.time;
             float vertical = Input.GetAxisRaw( "Vertical" );
@@ -33,10 +33,12 @@ namespace Assets.Scripts
             }
             else if ( horizontal > 0 )
             {
+               transform.localScale = new Vector3( -1, 1, 1 );
                transform.position = new Vector3( transform.position.x + 16.0f, transform.position.y);
             }
             else if ( horizontal < 0 )
             {
+               transform.localScale = new Vector3( 1, 1, 1 );
                transform.position = new Vector3( transform.position.x - 16.0f, transform.position.y );
             }
          }
