@@ -10,8 +10,8 @@ namespace Assets.Scripts
       public GameObject Floor;
       public GameObject Wall;
 
-      public float TileWidth = 16.0f;
-      public float TileHeight = 24.0f;
+      public static float TileWidth = 16.0f;
+      public static float TileHeight = 24.0f;
       public float KeyPressDelay = 0.2f;
 
       public Map Map;
@@ -62,21 +62,75 @@ namespace Assets.Scripts
             if ( horizontal > 0 )
             {
                playerTransform.localScale = new Vector3( -1, 1, 1 );
-               playerTransform.position = new Vector3( playerTransform.position.x + TileWidth, playerTransform.position.y );
+               Vector3 newPosition = Vector.Right( playerTransform.position );
+               UpdatePlayerPosition( newPosition, playerTransform );
             }
             else if ( horizontal < 0 )
             {
                playerTransform.localScale = new Vector3( 1, 1, 1 );
-               playerTransform.position = new Vector3( playerTransform.position.x - TileWidth, playerTransform.position.y );
+               Vector3 newPosition = Vector.Left( playerTransform.position );
+               UpdatePlayerPosition( newPosition, playerTransform );
             }
             else if ( vertical > 0 )
             {
-               playerTransform.position = new Vector3( playerTransform.position.x, playerTransform.position.y + TileHeight );
+               Vector3 newPosition = Vector.Up( playerTransform.position );
+               UpdatePlayerPosition( newPosition, playerTransform );
             }
             else if ( vertical < 0 )
             {
-               playerTransform.position = new Vector3( playerTransform.position.x, playerTransform.position.y - TileHeight );
+               Vector3 newPosition = Vector.Down( playerTransform.position );
+               UpdatePlayerPosition( newPosition, playerTransform );
             }
+         }
+      }
+
+      private void UpdatePlayerPosition( Vector3 newPosition, Transform playerTransform )
+      {
+         Point mapLocation = Vector.ToPoint( newPosition );
+         if ( Map.IsWalkable( mapLocation.X, mapLocation.Y ) )
+         {
+            playerTransform.position = newPosition;
+         }
+      }
+
+      private static class Vector
+      {
+         public static Vector3 FromMap( int x, int y )
+         {
+            return new Vector3( x * TileWidth, y * TileHeight );
+         }
+
+         public static Point ToPoint( Vector3 sourceVector )
+         {
+            int x = 0;
+            int y = 0;
+            if ( (int) sourceVector.x != 0 )
+            {
+               x = (int) ( sourceVector.x / TileWidth );
+            }
+            if ( (int) sourceVector.y != 0 )
+            {
+               y = (int) ( sourceVector.y / TileHeight );
+            }
+            return new Point( x, y );
+         }
+
+         public static Vector3 Left( Vector3 sourceVector )
+         {
+            return new Vector3( sourceVector.x - TileWidth, sourceVector.y );
+         }
+
+         public static Vector3 Right( Vector3 sourceVector )
+         {
+            return new Vector3( sourceVector.x + TileWidth, sourceVector.y );
+         }
+         public static Vector3 Up( Vector3 sourceVector )
+         {
+            return new Vector3( sourceVector.x, sourceVector.y + TileHeight );
+         }
+         public static Vector3 Down( Vector3 sourceVector )
+         {
+            return new Vector3( sourceVector.x, sourceVector.y - TileHeight );
          }
       }
    }
