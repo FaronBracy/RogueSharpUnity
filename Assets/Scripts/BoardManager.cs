@@ -12,32 +12,37 @@ namespace Assets.Scripts
 
       public static float TileWidth = 16.0f;
       public static float TileHeight = 24.0f;
+      public static int BoardWidth = 10;
+      public static int BoardHeight = 10;
       public float KeyPressDelay = 0.2f;
 
       public Map Map;
+      public GameObject[,] Tiles;
 
       private float _lastKeyPressTime;
       private GameObject _player;
 
       public void Start()
       {
-         Map = Map.Create( new BorderOnlyMapCreationStrategy<Map>( 10, 10 ) );
+         Tiles = new GameObject[BoardWidth,BoardHeight];
+         Map = Map.Create( new BorderOnlyMapCreationStrategy<Map>( BoardWidth, BoardHeight ) );
 
          Transform boardHolder = GameObject.Find( "Board" ).transform;
          foreach ( var cell in Map.GetAllCells() )
          {
             int x = cell.X * 16;
             int y = cell.Y * 24;
+
+            GameObject tileType = Wall;
+
             if ( cell.IsWalkable )
             {
-               GameObject instance = Instantiate( Floor, new Vector3( x, y, 0f ), Quaternion.identity ) as GameObject;
-               instance.transform.SetParent( boardHolder );
+               tileType = Floor;
             }
-            else
-            {
-               GameObject instance = Instantiate( Wall, new Vector3( x, y, 0f ), Quaternion.identity ) as GameObject;
-               instance.transform.SetParent( boardHolder );
-            }
+
+            GameObject instance = Instantiate( tileType, new Vector3( x, y, 0f ), Quaternion.identity ) as GameObject;
+            instance.transform.SetParent( boardHolder );
+            Tiles[cell.X, cell.Y] = instance;
          }
 
          _player = Instantiate( Player, new Vector3( TileWidth, TileHeight, 0f ), Quaternion.identity ) as GameObject;
@@ -90,6 +95,24 @@ namespace Assets.Scripts
          if ( Map.IsWalkable( mapLocation.X, mapLocation.Y ) )
          {
             playerTransform.position = newPosition;
+            var fov = new FieldOfView( Map );
+            fov.ComputeFov( mapLocation.X, mapLocation.Y, 3, true );
+  
+            for ( int x = 0; x < BoardWidth; x++ )
+            {
+               for ( int y = 0; y < BoardHeight; y++ )
+               {
+                  GameObject tile = Tiles[x, y];
+                  if ( fov.IsInFov( x, y ) )
+                  {
+                     tile.GetComponent<Renderer>().material.color = Color.yellow;
+                  }
+                  else
+                  {
+                     tile.GetComponent<Renderer>().material.color = Color.grey;
+                  }
+               }
+            }
          }
       }
 
