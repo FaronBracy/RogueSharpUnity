@@ -13,7 +13,7 @@ SceneSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 6
+  serializedVersion: 7
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -37,12 +37,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 6
+  serializedVersion: 7
   m_GIWorkflowMode: 1
-  m_LightmapsMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -53,17 +53,22 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 3
+    serializedVersion: 4
     m_Resolution: 1
     m_BakeResolution: 50
     m_TextureWidth: 1024
     m_TextureHeight: 1024
+    m_AO: 0
     m_AOMaxDistance: 1
-    m_Padding: 2
     m_CompAOExponent: 0
+    m_CompAOExponentDirect: 0
+    m_Padding: 2
     m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
     m_TextureCompression: 0
+    m_DirectLightInLightProbes: 1
     m_FinalGather: 0
+    m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
   m_LightingDataAsset: {fileID: 0}
@@ -85,6 +90,52 @@ NavMeshSettings:
     cellSize: 0.16666666
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &685110459
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &725077001 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 495892, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
+  m_PrefabInternal: {fileID: 685110459}
 --- !u!1 &1089777624
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +148,7 @@ GameObject:
   - 92: {fileID: 1089777627}
   - 124: {fileID: 1089777626}
   - 81: {fileID: 1089777625}
+  - 114: {fileID: 1089777630}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -172,6 +224,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1089777630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1089777624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f89ae13faa7ab4cbbf91a23995ce6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 725077001}
+  damping: 0.2
+  lookAheadFactor: 0
+  lookAheadReturnSpeed: 0
+  lookAheadMoveThreshold: 0
 --- !u!1 &1453772403
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,8 +281,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 179312, guid: 9e3891726c0ccca43ad0f9ba0b84067f, type: 2}
-  Floor: {fileID: 134202, guid: 10571d4168efb3c49beb3e0743eb1d72, type: 2}
-  Wall: {fileID: 184308, guid: 74232d17ee64526489f4de538ef99fc8, type: 2}
-  TileWidth: 16
-  TileHeight: 24
+  Floor: {fileID: 134202, guid: 9bf9872288231ed469ec4522c7d23eeb, type: 2}
+  Wall: {fileID: 184308, guid: 94cce61b9fd6cd64984a2a8f0bd21cca, type: 2}
   KeyPressDelay: 0.2

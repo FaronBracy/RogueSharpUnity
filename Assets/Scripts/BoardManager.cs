@@ -12,8 +12,8 @@ namespace Assets.Scripts
 
       public static float TileWidth = 16.0f;
       public static float TileHeight = 24.0f;
-      public static int BoardWidth = 10;
-      public static int BoardHeight = 10;
+      public static int BoardWidth = 40;
+      public static int BoardHeight = 24;
       public float KeyPressDelay = 0.2f;
 
       public Map Map;
@@ -24,7 +24,7 @@ namespace Assets.Scripts
 
       public void Start()
       {
-         Tiles = new GameObject[BoardWidth,BoardHeight];
+         Tiles = new GameObject[BoardWidth, BoardHeight];
          Map = Map.Create( new BorderOnlyMapCreationStrategy<Map>( BoardWidth, BoardHeight ) );
 
          Transform boardHolder = GameObject.Find( "Board" ).transform;
@@ -45,8 +45,9 @@ namespace Assets.Scripts
             Tiles[cell.X, cell.Y] = instance;
          }
 
-         _player = Instantiate( Player, new Vector3( TileWidth, TileHeight, 0f ), Quaternion.identity ) as GameObject;
-         _player.transform.SetParent( boardHolder );  
+         _player = GameObject.Find( "Player" );
+         _player.transform.SetParent( boardHolder );
+         _player.transform.position = new Vector3( TileWidth * ( BoardWidth / 2 ), TileHeight * ( BoardHeight / 2 ), 0f );
 
          // See https://www.reddit.com/r/Unity2D/comments/2eeo4n/pixel_perfection_in_2d_xpost_from_unity3d/?st=iq709jzu&sh=5ae55305
          Camera.main.orthographicSize = Screen.height / 2.0f;
@@ -97,7 +98,7 @@ namespace Assets.Scripts
             playerTransform.position = newPosition;
             var fov = new FieldOfView( Map );
             fov.ComputeFov( mapLocation.X, mapLocation.Y, 3, true );
-  
+
             for ( int x = 0; x < BoardWidth; x++ )
             {
                for ( int y = 0; y < BoardHeight; y++ )
