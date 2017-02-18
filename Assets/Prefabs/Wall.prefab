@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 469798}
   - 212: {fileID: 21203866}
+  - 114: {fileID: 114000011535545902}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -59,7 +60,7 @@ SpriteRenderer:
   m_SortingLayerID: -1162973713
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300084, guid: f63856aea119b1c459090347fb69e000, type: 3}
-  m_Color: {r: 0.13235295, g: 0.13235295, b: 0.13235295, a: 1}
+  m_Color: {r: 0.84313726, g: 0.84313726, b: 0.84313726, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
@@ -73,3 +74,14 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 184308}
   m_IsPrefabParent: 1
+--- !u!114 &114000011535545902
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a902c742e5beb4fa644af77c5093f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

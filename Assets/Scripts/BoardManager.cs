@@ -47,7 +47,8 @@ namespace Assets.Scripts
 
          _player = GameObject.Find( "Player" );
          _player.transform.SetParent( boardHolder );
-         _player.transform.position = new Vector3( TileWidth * ( BoardWidth / 2 ), TileHeight * ( BoardHeight / 2 ), 0f );
+         var startingPlayerPosition = new Vector3( TileWidth * ( BoardWidth / 2 ), TileHeight * ( BoardHeight / 2 ), 0f );
+         UpdatePlayerPosition( startingPlayerPosition, _player.transform );
 
          // See https://www.reddit.com/r/Unity2D/comments/2eeo4n/pixel_perfection_in_2d_xpost_from_unity3d/?st=iq709jzu&sh=5ae55305
          Camera.main.orthographicSize = Screen.height / 2.0f;
@@ -97,8 +98,7 @@ namespace Assets.Scripts
          {
             playerTransform.position = newPosition;
             var fov = new FieldOfView( Map );
-            fov.ComputeFov( mapLocation.X, mapLocation.Y, 3, true );
-
+            var cellsInFov = fov.ComputeFov( mapLocation.X, mapLocation.Y, 3, true );
             for ( int x = 0; x < BoardWidth; x++ )
             {
                for ( int y = 0; y < BoardHeight; y++ )
@@ -106,11 +106,13 @@ namespace Assets.Scripts
                   GameObject tile = Tiles[x, y];
                   if ( fov.IsInFov( x, y ) )
                   {
-                     tile.GetComponent<Renderer>().material.color = Color.yellow;
+                     tile.GetComponent<Tile>().IsTileLit = true;
+                     //tile.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, new Color(.843f, .843f, .843f), Mathf.PingPong(Time.time, 1));
                   }
                   else
                   {
-                     tile.GetComponent<Renderer>().material.color = Color.grey;
+                     tile.GetComponent<Tile>().IsTileLit = false;
+                     //tile.GetComponent<Renderer>().material.color = Color.grey;
                   }
                }
             }

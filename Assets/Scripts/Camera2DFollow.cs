@@ -3,7 +3,7 @@
 namespace Assets.Scripts
 {
    public class Camera2DFollow : MonoBehaviour
-   { 
+   {
       public Transform target;
       public float damping = 1;
       public float lookAheadFactor = 3;
